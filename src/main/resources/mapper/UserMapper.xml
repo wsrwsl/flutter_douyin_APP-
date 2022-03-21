@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.mapper.UserMapper">
+    <insert id="addUser" parameterType="com.myblog.entity.User">
+        insert into user(name,pass) values(#{name},#{pass})
+    </insert>
+
+    <select id="findUserByNameAndPwd" resultType="com.myblog.entity.User">
+        select name,pass from user where name=#{name} and pass=#{pass}
+    </select>
+
+    <select id="findUserByName" resultType="com.myblog.entity.User">
+        select name,pass from user where name=#{name}
+    </select>
+
+    <select id="findUserLove" resultType="String">
+        select userName from userLove where userName=#{userName} and type=#{type} and typeDetail=#{typeDetail}
+    </select>
+
+    <update id="updateUserLove">
+        update  userLove set num=num+1 where  userName=#{userName} and type=#{type} and typeDetail=#{typeDetail}
+    </update>
+
+    <insert id="insertUserLove" >
+        insert into userLove(userName,type,typeDetail,num) values(#{userName},#{type},#{typeDetail},1)
+    </insert>
+
+    <select id="findUserMostLove" resultType="String">
+        select typeDetail from userLove where type=#{type} and userName=#{userName} and num =( select max(num) from userLove where type=#{type} and userName=#{userName})
+    </select>
+</mapper>

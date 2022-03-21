@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.mapper.VideoMapper">
+    <insert id="updateVideo" >
+        insert into userVideo(userName,videoUrl,brand,type,price,age) values(#{userName},#{videoUrl},#{brand},#{type},#{price},#{age})
+    </insert>
+
+    <delete id="deleteVideo" >
+        delete from userVideo where videoUrl=#{videoUrl}
+    </delete>
+
+    <select id="requestVideos" resultType="com.myblog.entity.Video">
+        select videoUrl,userName,brand,type,price,age from user where userName=#{userName} and brand like #{selectBrand} and type like #{selectType} and  #{selectPrice} >= price and   #{selectAge} >= age
+    </select>
+
+    <select id="requestTotalVideos" resultType="com.myblog.entity.Video">
+        select videoUrl,userName,brand,type,price,age from userVideo where brand like #{selectBrand} and type like #{selectType} and  #{selectPrice} >= price and   #{selectAge} >= age
+    </select>
+</mapper>
